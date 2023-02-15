@@ -11,8 +11,8 @@
         <jsp:include page="/WEB-INF/paginas/comunes/cabecero.jsp"/>
 
         <form action="${pageContext.request.contextPath}/ServletControlador?accion=modificar&idCliente=${cliente.idCliente}"
-               method="POST" class="was-validated">
-            
+              method="POST" class="was-validated">
+
             <jsp:include page="/WEB-INF/paginas/comunes/btn-nav-editar.jsp"/>
 
             <section id="details">
@@ -25,13 +25,35 @@
                                         Editar cliente 
                                     </h4>
                                 </div>
+                                <div class="card-body">
+                                    <div class="form-group mb-2">
+                                        <label for="nombre" class="form-label mx-1">Nombre</label>
+                                        <input type="text" class="form-control" name="nombre" required value="${cliente.nombre}">
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label for="direccion" class="form-label mx-1">Dirección</label>
+                                        <input type="text" class="form-control" name="direccion" required value="${cliente.direccion}">
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label for="telefono" class="form-label mx-1">Teléfono</label>
+                                        <input type="text" class="form-control" name="telefono" required value="${cliente.telefono}">
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label for="email" class="form-label mx-1">Email</label>
+                                        <input type="email" class="form-control" name="email" required value="${cliente.email}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="saldo" class="form-label mx-1">Saldo</label>
+                                        <input type="number" step="0.01" class="form-control" name="saldo" required value="${cliente.saldo}">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
         </form>
-            
+
         <jsp:include page="/WEB-INF/paginas/comunes/footer.jsp"/>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

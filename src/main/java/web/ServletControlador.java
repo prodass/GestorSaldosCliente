@@ -20,6 +20,8 @@ public class ServletControlador extends HttpServlet {
         if (accion != null) {
             if (accion.equals("editar")) {
                 this.editarCliente(request, response);
+            } else if (accion.equals("eliminar")) {
+                this.eliminarCliente(request, response);
             } else {
                 this.accionDefault(request, response);
             }
@@ -66,6 +68,19 @@ public class ServletControlador extends HttpServlet {
         request.getRequestDispatcher(jspEditar).forward(request, response);
     }
 
+    private void eliminarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //Primero recuperamos los valores del form.
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+
+        //Lo insertamos en la db.
+        int registrosModificados = new ClienteDaoJDBC().eliminar(idCliente);
+        System.out.println("registrosModificados = " + registrosModificados);
+
+        //Redirigimos hacia la accion por default.
+        this.accionDefault(request, response);
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,6 +89,8 @@ public class ServletControlador extends HttpServlet {
         if (accion != null) {
             if (accion.equals("insertar")) {
                 this.insertarCliente(request, response);
+            } else if (accion.equals("modificar")) {
+                this.actualizarCliente(request, response);
             } else {
                 this.accionDefault(request, response);
             }
@@ -82,7 +99,8 @@ public class ServletControlador extends HttpServlet {
         }
     }
 
-    private void insertarCliente(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void insertarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         //Primero recuperamos los valores del form.
         String nombre = request.getParameter("nombre");
         String direccion = request.getParameter("direccion");
@@ -99,6 +117,31 @@ public class ServletControlador extends HttpServlet {
 
         //Lo insertamos en la db.
         int registrosModificados = new ClienteDaoJDBC().insertar(cliente);
+        System.out.println("registrosModificados = " + registrosModificados);
+
+        //Redirigimos hacia la accion por default.
+        this.accionDefault(request, response);
+    }
+
+    private void actualizarCliente(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //Primero recuperamos los valores del form.
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        String nombre = request.getParameter("nombre");
+        String direccion = request.getParameter("direccion");
+        String telefono = request.getParameter("telefono");
+        String email = request.getParameter("email");
+        double saldo = 0;
+
+        if (!request.getParameter("saldo").equals("") && request.getParameter("saldo") != null) {
+            saldo = Double.parseDouble(request.getParameter("saldo"));
+        }
+
+        //Creamos el objeto del cliente (modelo).
+        Cliente cliente = new Cliente(idCliente, nombre, direccion, telefono, email, saldo);
+
+        //Lo insertamos en la db.
+        int registrosModificados = new ClienteDaoJDBC().actualizar(cliente);
         System.out.println("registrosModificados = " + registrosModificados);
 
         //Redirigimos hacia la accion por default.

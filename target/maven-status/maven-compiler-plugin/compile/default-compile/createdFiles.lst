@@ -1,4 +1,5 @@
 datos\ClienteDaoJDBC.class
 datos\Conexion.class
 web\ServletControlador.class
+.netbeans_automatic_build
 dominio\Cliente.class
